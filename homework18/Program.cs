@@ -26,7 +26,7 @@ namespace homework18
             Console.Write("------------------------");
             Console.WriteLine("Show all list:  ");
             foreach (var i in CountryList)
-                Console.Write($"{i} ");
+                Console.WriteLine($"{i} ");
 
             Console.WriteLine("\n---------dictionary---------");
             ClientList.Add(10, "Umarov D.O.");
@@ -38,10 +38,10 @@ namespace homework18
             Console.WriteLine($"Client[Valiev] = {ClientList[2]}");
             Console.WriteLine($"Client[Rashidova R.K.] = {ClientList[3]}");
 
-            Console.Write("------------------------");
+            Console.WriteLine("------------------------");
             Console.WriteLine("Show all Client list:  ");
-            foreach (var i in ClientList)
-                Console.Write($"{i} ");
+            foreach (Pair<int, string> i in ClientList.GetItems())
+                Console.WriteLine($"{i.key} - {i.value} ");
             Console.ReadKey();
         }
     }

@@ -93,54 +93,67 @@ namespace homework18
             }
         }
         //реализация интервейса IEnumerable
-        public IEnumerator GetEnumerator()
+        public IEnumerable GetItems()
         {
-            return new DictionaryEnumerator<Tkey, Tvalue>(keylist, valuelist);
-        }
-
-    }
-    public class DictionaryEnumerator<Tkey, Tvalue> : IEnumerator
-    {
-        public Pair<Tkey, Tvalue>[] item;
-        public int curposition = -1;
-        public int size = 0;
-        DictionaryEnumerator(Tkey[] keylist, Tvalue[] valuelist)
-        {
-            for (int i = 0; i < keylist.Length; i++)
+            Pair<Tkey, Tvalue> item;
+            for (int i = 0; i < count; i++)
             {
-                item[i].key = keylist[i];
-                item[i].value = valuelist[i];
+                item = new Pair<Tkey, Tvalue>(keylist[i], valuelist[i]);
+                yield return item;
             }
         }
 
-        public bool MoveNext()
-        {
-            if (curposition < size)
-            {
-                curposition++;
-                return true;
-            }
-            else
-                return false;
-        }
-        /*  public object Current()
-          {
-              get{
-                  if (curposition == -1 || curposition >= size)
-                      throw new InvalidOperationException();
-                  return (object)item[curposition];
-              }
-          }*/
-        object IEnumerator.Current => throw new NotImplementedException();
-        public void Reset()
-        {
-            curposition = -1;
-        }
-
     }
+    /*   public class DictionaryEnumerator<Tkey, Tvalue>:IEnumerator
+       {
+           public Pair<Tkey, Tvalue>[] item;
+           public int curposition = -1;
+           public int size = 0;
+           DictionaryEnumerator(Tkey[] keylist, Tvalue[] valuelist)
+           {
+               for (int i = 0; i < keylist.Length; i++)
+               {            
+                   item[i].key = keylist[i];
+                   item[i].value = valuelist[i];
+               }
+           }
+
+           public bool MoveNext()
+           {
+               if(curposition < size)
+               {
+                   curposition++;
+                   return true;
+               }
+               else
+                   return false;
+           }
+         /*  public object Current()
+           {
+               get{
+                   if (curposition == -1 || curposition >= size)
+                       throw new InvalidOperationException();
+                   return (object)item[curposition];
+               }
+           }
+           object IEnumerator.Current => throw new NotImplementedException();
+           public void Reset()
+           {
+               curposition = -1;
+           }
+
+       }
+
+   */
     public class Pair<Tkey, Tvalue>
     {
         public Tkey key { get; set; }
         public Tvalue value { get; set; }
+
+        public Pair(Tkey k, Tvalue v)
+        {
+            this.key = k;
+            this.value = v;
+        }
     }
 }
