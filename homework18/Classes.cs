@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 
 namespace homework18
@@ -40,10 +41,11 @@ namespace homework18
             return body.GetEnumerator();
         }
     }
-    public class MyDictionary<Tkey, Tvalue> : IEnumerable
+    public class MyDictionary<Tkey, Tvalue>
     {
         public Tkey[] keylist { get; set; }
         public Tvalue[] valuelist { get; set; }
+        public Pair<Tkey, Tvalue>[] item { get; set; }
         public int count { get { return keylist.Length; } }
 
         public MyDictionary()
@@ -90,10 +92,55 @@ namespace homework18
                     }
             }
         }
-        //реализация foreach
+        //реализация интервейса IEnumerable
         public IEnumerator GetEnumerator()
         {
-            return valuelist.GetEnumerator();
+            return new DictionaryEnumerator<Tkey, Tvalue>(keylist, valuelist);
         }
+
+    }
+    public class DictionaryEnumerator<Tkey, Tvalue> : IEnumerator
+    {
+        public Pair<Tkey, Tvalue>[] item;
+        public int curposition = -1;
+        public int size = 0;
+        DictionaryEnumerator(Tkey[] keylist, Tvalue[] valuelist)
+        {
+            for (int i = 0; i < keylist.Length; i++)
+            {
+                item[i].key = keylist[i];
+                item[i].value = valuelist[i];
+            }
+        }
+
+        public bool MoveNext()
+        {
+            if (curposition < size)
+            {
+                curposition++;
+                return true;
+            }
+            else
+                return false;
+        }
+        /*  public object Current()
+          {
+              get{
+                  if (curposition == -1 || curposition >= size)
+                      throw new InvalidOperationException();
+                  return (object)item[curposition];
+              }
+          }*/
+        object IEnumerator.Current => throw new NotImplementedException();
+        public void Reset()
+        {
+            curposition = -1;
+        }
+
+    }
+    public class Pair<Tkey, Tvalue>
+    {
+        public Tkey key { get; set; }
+        public Tvalue value { get; set; }
     }
 }
