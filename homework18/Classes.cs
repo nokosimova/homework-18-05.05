@@ -7,15 +7,25 @@ namespace homework18
     public class MyList<T> : IEnumerable
     {
         public T[] body { get; set; }
-        public int count { get { return body.Length; } }
-
-        public void Add(T new_el)
+        public object count
         {
-            T[] newbody = new T[count + 1];
-
-            for (int i = 0; i <= count + 1; i++)
+            get
             {
-                newbody[i] = (i == count) ? new_el : body[i];
+                object n = 0;
+                n = (object)body.Length;
+                return n;
+            }
+        }
+
+        public void Add(object obj)
+        {
+            T new_el = (T)obj;
+            int n = (int)count;
+            T[] newbody = new T[n + 1];
+
+            for (int i = 0; i <= n + 1; i++)
+            {
+                newbody[i] = (i == n) ? new_el : body[i];
             }
             this.body = newbody;
         }
@@ -32,7 +42,7 @@ namespace homework18
             return body.GetEnumerator();
         }
     }
-    public class MyDictionary<Tkey,Tvalue>
+    public class MyDictionary<Tkey, Tvalue> : IEnumerable
     {
         Tkey[] keylist { get; set; }
         Tvalue[] valuelist { get; set; }
@@ -54,22 +64,27 @@ namespace homework18
         {
             get
             {
-                Tvalue v = new Tvalue();
-                for(i = 0; i < count; i++)
-                    if (keylist[i] == key)
+                Tvalue v = valuelist[0];
+                for (int i = 0; i < count; i++)
+                    if ((object)keylist[i] == (object)key)
                     {
-                        return valuelist[i];
+                        v = valuelist[i];
                     }
-                Console.Writeline("Error, no element with such key");
-                retun v;
+                return v;
             }
-            set { 
-                for(i = 0; i < count; i++)
-                    if (keylist[i] == key)
+            set
+            {
+                for (int i = 0; i < count; i++)
+                    if ((object)keylist[i] == (object)key)
                     {
                         valuelist[i] = value;
                     }
             }
+        }
+        //реализация foreach
+        public IEnumerator GetEnumerator()
+        {
+            return valuelist.GetEnumerator();
         }
     }
 }
