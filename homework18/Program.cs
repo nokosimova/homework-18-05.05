@@ -9,9 +9,9 @@ namespace homework18
     {
         static void Main(string[] args)
         {
-            MyList<string> CountryList = new MyList<int>();
-            MyDictionary<string, int> BalanceList = new MyDictionary<string, int>();
-            Console.Writeline("-----------list-----------");
+            MyList<string> CountryList = new MyList<string>();
+            MyDictionary<int, string> ClientList = new MyDictionary<int, string>();
+            Console.WriteLine("-----------list-----------");
             CountryList.Add("Tajikistan");
             CountryList.Add("Russia");
             CountryList.Add("Uzbeistan");
@@ -25,22 +25,22 @@ namespace homework18
 
             Console.Write("------------------------");
             Console.WriteLine("Show all list:  ");
-            foreach (MyList<string> i in CountryList)
+            foreach (var i in CountryList)
                 Console.Write($"{i} ");
 
-            Console.WriteLine("---------dictionary---------");
-            BalanceList.Add("Umarov D.O.", 1000);
-            BalanceList.Add("Komilov V.V", 520000);
-            BalanceList.Add("Rashidova R.K.", 1500);
-            BalanceList.Add("Turaev K.L.", 500);
-            BalanceList.Add("Valiev S.L.", 25000);
-
-            Console.WriteLine($"balance[Valiev S.L.] = {BalanceList["Valiev S.L."]}");
-            Console.WriteLine($"balance[Rashidova R.K.] = {BalanceList["Rashidova R.K."]}");
+            Console.WriteLine("\n---------dictionary---------");
+            ClientList.Add(10, "Umarov D.O.");
+            ClientList.Add(2, "Komilov V.V");
+            ClientList.Add(3, "Rashidova R.K.");
+            ClientList.Add(4, "Turaev K.L.");
+            ClientList.Add(5, "Valiev");
+            //  ClientList[1] = "abc";
+            Console.WriteLine($"Client[Valiev] = {ClientList[2]}");
+            Console.WriteLine($"Client[Rashidova R.K.] = {ClientList[3]}");
 
             Console.Write("------------------------");
-            Console.WriteLine("Show all balance list:  ");
-            foreach (MyDictionary<string,int> i in BalanceList)
+            Console.WriteLine("Show all Client list:  ");
+            foreach (var i in ClientList)
                 Console.Write($"{i} ");
             Console.ReadKey();
         }

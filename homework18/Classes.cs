@@ -6,14 +6,12 @@ namespace homework18
 {
     public class MyList<T> : IEnumerable
     {
-        public T[] body { get; set; }
-        public object count
+        public T[] body = new T[0];
+        public int count
         {
             get
             {
-                object n = 0;
-                n = (object)body.Length;
-                return n;
+                return body.Length;
             }
         }
 
@@ -23,7 +21,7 @@ namespace homework18
             int n = (int)count;
             T[] newbody = new T[n + 1];
 
-            for (int i = 0; i <= n + 1; i++)
+            for (int i = 0; i <= n; i++)
             {
                 newbody[i] = (i == n) ? new_el : body[i];
             }
@@ -44,33 +42,44 @@ namespace homework18
     }
     public class MyDictionary<Tkey, Tvalue> : IEnumerable
     {
-        Tkey[] keylist { get; set; }
-        Tvalue[] valuelist { get; set; }
-        int count { get { return keylist.Length; } }
-        public void Add(Tkey newkey, Tvalue newvalue)
+        public Tkey[] keylist { get; set; }
+        public Tvalue[] valuelist { get; set; }
+        public int count { get { return keylist.Length; } }
+
+        public MyDictionary()
         {
-            Tkey[] newkeylist = new Tkey[count + 1];
-            Tvalue[] newvaluelist = new Tvalue[count + 1];
-            for (int i = 0; i <= count + 1; i++)
+            Tkey[] klist = new Tkey[0];
+            Tvalue[] vlist = new Tvalue[0];
+            keylist = klist;
+            valuelist = vlist;
+        }
+        public void Add(object obj1, object obj2)
+        {
+            int n = (int)count;
+            Tkey newkey = (Tkey)obj1;
+            Tvalue newvalue = (Tvalue)obj2;
+
+            Tkey[] newkeylist = new Tkey[n + 1];
+            Tvalue[] newvaluelist = new Tvalue[n + 1];
+            for (int i = 0; i <= n; i++)
             {
-                newkeylist[i] = (i == count) ? newkey : keylist[i];
-                newvaluelist[i] = (i == count) ? newvalue : valuelist[i];
-                keylist = newkeylist;
-                valuelist = newvaluelist;
+                newkeylist[i] = (i != n) ? keylist[i] : newkey;
+                newvaluelist[i] = (i != n) ? valuelist[i] : newvalue;
             }
+            this.keylist = newkeylist;
+            this.valuelist = newvaluelist;
         }
         //индексатор
         public Tvalue this[Tkey key]
         {
             get
             {
-                Tvalue v = valuelist[0];
                 for (int i = 0; i < count; i++)
-                    if ((object)keylist[i] == (object)key)
-                    {
-                        v = valuelist[i];
-                    }
-                return v;
+                {
+                    if (keylist[i] == (dynamic)key)
+                        return valuelist[i];
+                }
+                throw new NullReferenceException();
             }
             set
             {
